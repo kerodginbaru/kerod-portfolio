@@ -1,0 +1,63 @@
+databases:
+  - name: kerod-portfolio-db
+    databaseName: kerod_portfolio
+    user: kerod
+    plan: free
+
+services:
+  - type: web
+    name: kerod-portfolio-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: "Kerod Ginbaru Portfolio API"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: kerod-portfolio-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: kerod-portfolio-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: kerod-portfolio-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: kerod-portfolio-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: kerod-portfolio-db
+          property: password
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: MAIL_MAILER
+        value: log
+      - key: CONTACT_NOTIFICATION_EMAIL
+        value: kerodhope@gmail.com
+      - key: FRONTEND_URL
+        sync: false
+      - key: SANCTUM_STATEFUL_DOMAINS
+        sync: false
