@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
 # System deps + PHP extensions Laravel needs (Postgres for Render's free
 # database tier, MySQL kept too in case you switch hosts later).
