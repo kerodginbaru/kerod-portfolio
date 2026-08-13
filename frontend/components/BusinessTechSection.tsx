@@ -26,12 +26,13 @@ export default function BusinessTechSection() {
               <br />
               <span className="text-[var(--accent)]">+</span> Business
             </h2>
-            <p className="mt-6 max-w-md text-[var(--ink)]/75">
-              My background in Information Technology and Management means I
-              don&apos;t just build what&apos;s asked for — I understand the
-              business process behind the request, and design the system to
-              match it.
-            </p>
+           <p className="mt-6 max-w-md text-[var(--ink)]/75">
+  My foundation spans both Information Technology and Management,
+  studied at Wolkite University. That dual grounding shapes every
+  project: before a line of code is written, I map the business
+  process — the workflow, the decisions, the people involved — then
+  engineer a system built to match it, not the other way around.
+</p>
           </div>
 
           <ol className="flex flex-col">
