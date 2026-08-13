@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             ProjectCategorySeeder::class,
             SkillSeeder::class,
             ProjectSeeder::class,
+            EducationSeeder::class,
             // TestimonialSeeder intentionally not called — testimonials
             // are entered only through the admin panel, never seeded.
         ]);
