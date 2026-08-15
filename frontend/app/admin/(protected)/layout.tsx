@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { LayoutDashboard, FolderKanban, Mail, LogOut, Loader2, Settings } from "lucide-react";
 import { useAdminAuth } from "@/lib/adminAuth";
-import { getSiteSettings } from "@/lib/api";
 
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -19,15 +17,11 @@ export default function AdminProtectedLayout({ children }: { children: React.Rea
   const { user, loading, logout } = useAdminAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) router.replace("/admin/login");
   }, [loading, user, router]);
-
-  useEffect(() => {
-    getSiteSettings().then((s) => setAvatarUrl(s.admin_avatar_url));
-  }, []);
 
   if (loading || !user) {
     return (
@@ -42,8 +36,14 @@ export default function AdminProtectedLayout({ children }: { children: React.Rea
       <aside className="w-60 shrink-0 border-r border-[var(--ink)]/10 p-6">
         <div className="flex items-center gap-3">
           <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--accent)]/40 bg-white/5">
-            {avatarUrl ? (
-              <Image src={avatarUrl} alt="" fill className="object-cover" />
+            {!photoFailed ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src="/images/profile.jpg"
+                alt=""
+                onError={() => setPhotoFailed(true)}
+                className="h-full w-full object-cover"
+              />
             ) : (
               <div className="flex h-full w-full items-center justify-center font-mono text-[10px] text-[var(--muted)]">
                 KG
