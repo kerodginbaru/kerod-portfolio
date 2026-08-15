@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { useAdminAuth } from "@/lib/adminAuth";
-import { getSiteSettings } from "@/lib/api";
 
 export default function AdminLoginPage() {
   const { login } = useAdminAuth();
@@ -14,11 +12,7 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    getSiteSettings().then((s) => setAvatarUrl(s.admin_avatar_url));
-  }, []);
+  const [photoFailed, setPhotoFailed] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,8 +31,14 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="relative mx-auto h-16 w-16 overflow-hidden rounded-full border border-[var(--accent)]/40 bg-white/5">
-          {avatarUrl ? (
-            <Image src={avatarUrl} alt="" fill className="object-cover" />
+          {!photoFailed ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src="/images/profile.jpg"
+              alt=""
+              onError={() => setPhotoFailed(true)}
+              className="h-full w-full object-cover"
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center font-mono text-sm text-[var(--muted)]">
               KG
