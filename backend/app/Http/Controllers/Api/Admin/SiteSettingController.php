@@ -54,4 +54,28 @@ class SiteSettingController extends Controller
 
         return $this->success(new SiteSettingResource(SiteSetting::allAsArray()), 'Profile photo updated successfully.');
     }
+    /**
+     * Upload/replace the small avatar shown only on the admin login screen
+     * and sidebar — intentionally separate from the public hero photo, so
+     * you can use a different image for each context.
+     */
+    public function uploadAvatar(Request $request): JsonResponse
+    {
+        $request->validate([
+            'avatar' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+        ]);
+
+        $old = SiteSetting::get('admin_avatar');
+        if ($old) {
+            Storage::disk('public')->delete($old);
+        }
+
+        $file = $request->file('avatar');
+        $extension = $file->extension() ?: 'jpg';
+        $path = $file->storeAs('settings', Str::uuid().'.'.$extension, 'public');
+
+        SiteSetting::set('admin_avatar', $path);
+
+        return $this->success(new SiteSettingResource(SiteSetting::allAsArray()), 'Admin avatar updated successfully.');
+    }
 }

@@ -29,8 +29,11 @@ class SiteSettingResource extends JsonResource
             'contact_cta' => $s['contact_cta'] ?? '',
             'resume_url' => $s['resume_url'] ?? null,
             'profile_photo_url' => isset($s['profile_photo']) && $s['profile_photo']
-                ? Storage::disk('public')->url($s['profile_photo'])
-                : null,
-        ];
+              ? Storage::disk('public')->url($s['profile_photo'])
+             : null,
+            'admin_avatar_url' => isset($s['admin_avatar']) && $s['admin_avatar']
+             ? Storage::disk('public')->url($s['admin_avatar'])
+             : null,
+];
     }
 }

@@ -130,7 +130,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/site-settings', [AdminSiteSettingController::class, 'index']);
         Route::put('/site-settings', [AdminSiteSettingController::class, 'update']);
         Route::post('/site-settings/photo', [AdminSiteSettingController::class, 'uploadPhoto']);
-
+        Route::post('/site-settings/avatar', [AdminSiteSettingController::class, 'uploadAvatar']);
         Route::apiResource('messages', ContactMessageController::class)
             ->only(['index', 'show', 'update', 'destroy'])
             ->names('admin.messages');
