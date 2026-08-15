@@ -44,6 +44,7 @@ export const siteSettings: SiteSettings = {
     "My background spans both Information Technology and Management. That combination means I don't just implement features — I understand the business process behind the request, from requirements through to deployment.",
   contact_cta: "Have a project in mind? Let's talk about what you're building.",
   resume_url: null,
+  profile_photo_url: null,
 };
 
 export const socialLinks: SocialLink[] = [

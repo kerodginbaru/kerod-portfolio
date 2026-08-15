@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { useAdminAuth } from "@/lib/adminAuth";
+import { getSiteSettings } from "@/lib/api";
 
 export default function AdminLoginPage() {
   const { login } = useAdminAuth();
@@ -12,6 +14,11 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    getSiteSettings().then((s) => setPhotoUrl(s.profile_photo_url));
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,8 +36,20 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent)]">Admin</p>
-        <h1 className="font-display mt-3 text-3xl font-bold">Sign in</h1>
+        <div className="relative mx-auto h-16 w-16 overflow-hidden rounded-full border border-[var(--accent)]/40 bg-white/5">
+          {photoUrl ? (
+            <Image src={photoUrl} alt="" fill className="object-cover" />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center font-mono text-sm text-[var(--muted)]">
+              KG
+            </div>
+          )}
+        </div>
+
+        <p className="mt-6 text-center font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent)]">
+          Admin
+        </p>
+        <h1 className="font-display mt-3 text-center text-3xl font-bold">Sign in</h1>
 
         <form onSubmit={handleSubmit} className="mt-8 grid gap-5">
           <div>

@@ -130,6 +130,7 @@ export interface SiteSettings {
   about_text: string;
   contact_cta: string;
   resume_url: string | null;
+  profile_photo_url: string | null;
 }
 
 export interface ContactPayload {

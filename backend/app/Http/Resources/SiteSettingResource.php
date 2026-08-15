@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Wraps a plain associative array (App\Models\SiteSetting::allAsArray())
@@ -27,6 +28,9 @@ class SiteSettingResource extends JsonResource
             'about_text' => $s['about_text'] ?? '',
             'contact_cta' => $s['contact_cta'] ?? '',
             'resume_url' => $s['resume_url'] ?? null,
+            'profile_photo_url' => isset($s['profile_photo']) && $s['profile_photo']
+                ? Storage::disk('public')->url($s['profile_photo'])
+                : null,
         ];
     }
 }

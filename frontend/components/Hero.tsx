@@ -105,10 +105,10 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
         >
           <div className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(circle_at_50%_20%,color-mix(in_srgb,var(--accent)_35%,transparent),transparent_70%)]" />
           <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border border-[var(--accent)]/40 bg-white/[0.03] shadow-[0_0_60px_-15px_var(--accent)]">
-            {!photoFailed ? (
+            {!photoFailed && settings.profile_photo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src="/images/profile.jpg"
+                src={settings.profile_photo_url}
                 alt={settings.name}
                 onError={() => setPhotoFailed(true)}
                 className="h-full w-full object-cover"

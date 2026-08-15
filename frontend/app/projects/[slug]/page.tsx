@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ExternalLink, FolderGit2 } from "lucide-react";
 import StatusBadge from "@/components/StatusBadge";
 import { getProject, getProjects } from "@/lib/api";
@@ -58,6 +59,24 @@ export default async function ProjectDetailPage({
 
         <h1 className="font-display mt-4 text-5xl font-extrabold md:text-6xl">{project.title}</h1>
         <p className="mt-4 max-w-2xl text-lg text-[var(--ink)]/75">{project.description}</p>
+
+        {project.cover_image && (
+          <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[var(--ink)]/10">
+            <Image src={project.cover_image} alt={project.title} fill className="object-cover" priority />
+          </div>
+        )}
+
+        {project.images.length > 1 && (
+          <div className="mt-3 grid grid-cols-4 gap-3">
+            {project.images
+              .filter((img) => img.url !== project.cover_image)
+              .map((img) => (
+                <div key={img.id} className="relative aspect-square overflow-hidden rounded-lg border border-[var(--ink)]/10">
+                  <Image src={img.url} alt={img.alt_text ?? project.title} fill className="object-cover" />
+                </div>
+              ))}
+          </div>
+        )}
 
         <div className="mt-8 flex flex-wrap gap-3">
           {project.github_url ? (

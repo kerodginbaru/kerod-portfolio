@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useAdminAuth } from "@/lib/adminAuth";
 import ProjectForm from "@/components/admin/ProjectForm";
+import ProjectImageManager from "@/components/admin/ProjectImageManager";
 import type { Project } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -34,7 +35,10 @@ export default function EditProjectPage() {
   return (
     <div>
       <h1 className="font-display text-3xl font-bold">Edit project</h1>
-      <div className="mt-8">
+      <div className="mt-8 max-w-2xl">
+        <ProjectImageManager projectId={project.id} initialImages={project.images} />
+      </div>
+      <div className="mt-10">
         <ProjectForm project={project} />
       </div>
     </div>

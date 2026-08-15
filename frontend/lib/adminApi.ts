@@ -77,4 +77,39 @@ export const adminApi = {
       request(`/admin/messages/${id}`, token, { method: "PUT", body: JSON.stringify({ status }) }),
     delete: (token: string, id: number) => request(`/admin/messages/${id}`, token, { method: "DELETE" }),
   },
+
+  settings: {
+    get: (token: string) => request<import("@/types").SiteSettings>("/admin/site-settings", token),
+    update: (token: string, settings: Record<string, string | null>) =>
+      request<import("@/types").SiteSettings>("/admin/site-settings", token, {
+        method: "PUT",
+        body: JSON.stringify({ settings }),
+      }),
+    uploadPhoto: (token: string, file: File) => {
+      const form = new FormData();
+      form.append("photo", file);
+      return request<import("@/types").SiteSettings>("/admin/site-settings/photo", token, {
+        method: "POST",
+        body: form,
+      });
+    },
+  },
+
+  projectImages: {
+    upload: (token: string, projectId: number, file: File, isCover: boolean) => {
+      const form = new FormData();
+      form.append("image", file);
+      form.append("is_cover", isCover ? "1" : "0");
+      return request<import("@/types").ProjectImage>(`/admin/projects/${projectId}/images`, token, {
+        method: "POST",
+        body: form,
+      });
+    },
+    delete: (token: string, projectId: number, imageId: number) =>
+      request(`/admin/projects/${projectId}/images/${imageId}`, token, { method: "DELETE" }),
+    setCover: (token: string, projectId: number, imageId: number) =>
+      request<import("@/types").ProjectImage>(`/admin/projects/${projectId}/images/${imageId}/cover`, token, {
+        method: "PATCH",
+      }),
+  },
 };
