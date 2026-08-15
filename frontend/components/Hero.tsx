@@ -95,8 +95,11 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
         </div>
 
         {/* Portrait slot — split layout matching the "developer photo next
-            to the headline" reference. Falls back to an initials avatar
-            until a real photo exists at /public/images/profile.jpg. */}
+            to the headline" reference. Uses a static file committed to the
+            repo (frontend/public/images/profile.jpg) rather than a
+            backend-uploaded photo, since Render's free-tier filesystem is
+            ephemeral and wipes uploads on every redeploy. Falls back to an
+            initials avatar if that file is missing. */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -105,10 +108,10 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
         >
           <div className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(circle_at_50%_20%,color-mix(in_srgb,var(--accent)_35%,transparent),transparent_70%)]" />
           <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border border-[var(--accent)]/40 bg-white/[0.03] shadow-[0_0_60px_-15px_var(--accent)]">
-            {!photoFailed && settings.profile_photo_url ? (
+            {!photoFailed ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={settings.profile_photo_url}
+                src="/images/profile.jpg"
                 alt={settings.name}
                 onError={() => setPhotoFailed(true)}
                 className="h-full w-full object-cover"
