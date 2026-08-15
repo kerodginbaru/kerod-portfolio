@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/featured', [ProjectController::class, 'featured']);
-Route::get('/projects/{project}', [ProjectController::class, 'show']);
+Route::get('/projects/{project:slug}', [ProjectController::class, 'show']);
 
 Route::get('/technologies', [TechnologyController::class, 'index']);
 Route::get('/services', [ServiceController::class, 'index']);
@@ -49,7 +49,7 @@ Route::get('/experience', [ExperienceController::class, 'index']);
 Route::get('/education', [EducationController::class, 'index']);
 
 Route::get('/blog', [BlogController::class, 'index']);
-Route::get('/blog/{blogPost}', [BlogController::class, 'show']);
+Route::get('/blog/{blogPost:slug}', [BlogController::class, 'show']);
 
 Route::get('/testimonials', [TestimonialController::class, 'index']);
 Route::get('/social-links', [SocialLinkController::class, 'index']);

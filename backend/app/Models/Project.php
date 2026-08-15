@@ -66,9 +66,4 @@ class Project extends Model
     {
         return $query->where('featured', true);
     }
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
 }
