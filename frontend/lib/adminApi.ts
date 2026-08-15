@@ -47,7 +47,7 @@ export const adminApi = {
   dashboard: (token: string) => request<Record<string, unknown>>("/admin/dashboard", token),
 
   projects: {
-    list: (token: string) => request<{ data: import("@/types").Project[] }>("/admin/projects", token),
+    list: (token: string) => request<import("@/types").Project[]>("/admin/projects", token),
     create: (token: string, body: Record<string, unknown>) =>
       request("/admin/projects", token, { method: "POST", body: JSON.stringify(body) }),
     update: (token: string, id: number, body: Record<string, unknown>) =>
@@ -66,9 +66,9 @@ export const adminApi = {
     list: (token: string) => request<{ id: number; name: string; slug: string }[]>("/admin/project-categories", token),
   },
 
-  messages: {
+ messages: {
     list: (token: string, status?: string) =>
-      request<{ data: import("@/types").ContactPayload[] }>(
+      request<import("@/types").ContactPayload[]>(
         `/admin/messages${status ? `?status=${status}` : ""}`,
         token
       ),

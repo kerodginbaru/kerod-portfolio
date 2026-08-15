@@ -17,8 +17,8 @@ export default function AdminProjectsPage() {
   const load = useCallback(() => {
     if (!token) return;
     setLoading(true);
-    adminApi.projects.list(token).then((res) => {
-      if (res.ok) setProjects((res.data as unknown as { data: Project[] }).data ?? []);
+   adminApi.projects.list(token).then((res) => {
+      if (res.ok) setProjects((res.data as unknown as Project[]) ?? []);
       else setError(res.message);
       setLoading(false);
     });

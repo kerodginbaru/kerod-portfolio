@@ -26,7 +26,7 @@ export default function AdminMessagesPage() {
     if (!token) return;
     setLoading(true);
     adminApi.messages.list(token).then((res) => {
-      if (res.ok) setMessages((res.data as unknown as { data: ContactMessage[] }).data ?? []);
+      if (res.ok) setMessages((res.data as unknown as ContactMessage[]) ?? []);
       setLoading(false);
     });
   }, [token]);
