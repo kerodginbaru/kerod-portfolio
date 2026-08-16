@@ -5,9 +5,9 @@ php artisan config:clear
 php artisan migrate --force
 php artisan storage:link || true
 
-# Seeders use updateOrCreate throughout, so running this on every boot is
-# safe and just keeps real project/skill/service data in sync.
-php artisan db:seed --force || true
+# Only seeds on the very first boot (empty database) — never overwrites
+# admin edits made through the dashboard on later restarts/redeploys.
+php artisan db:seed-if-empty || true
 
 # Free-tier Render has no Shell access, so the admin account is created
 # here instead — set ADMIN_EMAIL + ADMIN_PASSWORD (and optionally
