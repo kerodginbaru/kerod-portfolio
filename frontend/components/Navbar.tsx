@@ -14,12 +14,25 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [logoFailed, setLogoFailed] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--ink)]/10 bg-[var(--bg)]/80 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
-        <Link href="/" className="font-display text-lg font-bold tracking-tight focus-ring">
-          KG<span className="text-[var(--accent)]">.</span>
+        <Link href="/" className="focus-ring flex items-center">
+          {!logoFailed ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src="/images/logo.png"
+              alt="Kerod Ginbaru"
+              onError={() => setLogoFailed(true)}
+              className="h-9 w-auto"
+            />
+          ) : (
+            <span className="font-display text-lg font-bold tracking-tight">
+              KG<span className="text-[var(--accent)]">.</span>
+            </span>
+          )}
         </Link>
 
         <ul className="hidden gap-8 font-mono text-sm text-[var(--ink)]/80 md:flex">
